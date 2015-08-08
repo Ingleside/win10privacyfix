@@ -2,8 +2,8 @@
 #include <GUIConstantsEx.au3>
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
-#Region ### START Koda GUI section ### Form=C:\Users\yourname_here\Documents\GitHub\win10privacyfix\win10privacyfix.kxf
-$win10privacyfix = GUICreate("win10privacyfix", 534, 389, 204, 176)
+#Region ### START Koda GUI section ### Form=c:\users\yourname_here\documents\github\win10privacyfix\win10privacyfix.kxf
+$win10privacyfix = GUICreate("win10privacyfix - v0.3", 534, 458, 185, 131)
 $Gservices = GUICtrlCreateGroup("Services", 16, 56, 225, 113)
 $Cservice1 = GUICtrlCreateCheckbox("DiagTrack Service State...", 24, 72, 153, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
@@ -29,16 +29,34 @@ GUICtrlSetState(-1, $GUI_DISABLE)
 $Bfixtele = GUICtrlCreateButton("fix", 206, 266, 25, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-$Group3 = GUICtrlCreateGroup("other stuff", 248, 320, 281, 57)
-$Coldwindir = GUICtrlCreateCheckbox("no windows.old dir ", 256, 336, 193, 25)
+$Group3 = GUICtrlCreateGroup("other stuff ... todo", 248, 336, 281, 113)
+$Coldwindir = GUICtrlCreateCheckbox("no windows.old dir ", 256, 360, 193, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
-$Bfixwindir = GUICtrlCreateButton("fix", 456, 344, 25, 17)
+$Bfixwindir = GUICtrlCreateButton("fix", 496, 360, 25, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Checkbox8 = GUICtrlCreateCheckbox("Windows Update Serivce is active", 256, 376, 193, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Button3 = GUICtrlCreateButton("start", 456, 376, 33, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Button4 = GUICtrlCreateButton("stop", 488, 376, 33, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Checkbox9 = GUICtrlCreateCheckbox("Windows Update P2P Service active", 256, 392, 201, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Button5 = GUICtrlCreateButton("fix", 496, 392, 25, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Checkbox11 = GUICtrlCreateCheckbox("Windows Defender Cloud Protection", 256, 408, 233, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Button6 = GUICtrlCreateButton("fix", 496, 408, 25, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Checkbox12 = GUICtrlCreateCheckbox("Windows Defender Sample submission", 256, 424, 233, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Button7 = GUICtrlCreateButton("fix", 496, 424, 25, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-$Group1 = GUICtrlCreateGroup("Windows 10 Apps ... todo", 248, 144, 281, 169)
+$Group1 = GUICtrlCreateGroup("Windows 10 Apps ... todo", 248, 144, 281, 185)
 $Checkbox1 = GUICtrlCreateCheckbox("... to Location", 256, 168, 129, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
-$Checkbox2 = GUICtrlCreateCheckbox("...to Camera ", 256, 184, 121, 17)
+$Checkbox2 = GUICtrlCreateCheckbox("... to Camera ", 256, 184, 121, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
 $Checkbox3 = GUICtrlCreateCheckbox("... to Microphone", 256, 200, 145, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
@@ -50,12 +68,14 @@ $Checkbox6 = GUICtrlCreateCheckbox("... to SMS and MMS", 256, 248, 129, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
 $Checkbox7 = GUICtrlCreateCheckbox("... to bluetooth and wlan", 256, 264, 137, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
-$Button1 = GUICtrlCreateButton("remove access", 416, 288, 105, 17)
+$Button1 = GUICtrlCreateButton("remove access", 416, 304, 105, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
-$Button2 = GUICtrlCreateButton("uninstall all windows apps", 272, 288, 137, 17)
+$Button2 = GUICtrlCreateButton("uninstall all windows apps", 264, 304, 137, 17)
+GUICtrlSetState(-1, $GUI_DISABLE)
+$Checkbox10 = GUICtrlCreateCheckbox("... to Speech, inking and typing", 256, 280, 169, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-$Lversion = GUICtrlCreateLabel("Windows Version...", 16, 312, 223, 17)
+$Lversion = GUICtrlCreateLabel("Windows Version...", 16, 312, 215, 17)
 $Group4 = GUICtrlCreateGroup("General Privacy Settings", 248, 8, 281, 129)
 $CSmartScreen = GUICtrlCreateCheckbox("SmartScreen Filter...", 256, 64, 177, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
@@ -74,10 +94,24 @@ GUICtrlSetState(-1, $GUI_DISABLE)
 $Bfixad = GUICtrlCreateButton("fix", 496, 40, 25, 17)
 GUICtrlSetState(-1, $GUI_DISABLE)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
+$Lversio = GUICtrlCreateLabel("Programm Version...", 8, 432, 234, 17)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
+#Include <Array.au3>
+#Include <String.au3>
+#include <INet.au3>
 
+$version = "0.2"
+$titel = "win10privacyfix"
+
+;simple update checker
+Local $version = '0.2'
+Local $check_1 = 'https://raw.githubusercontent.com/lordfiSh/win10privacyfix/master/README.md'
+Local $check_2 = '### Version '
+Local $check_3 = '###'
+
+GUICtrlSetData($Lversio, "Version: " & $version)
 
 If @OSVersion = "WIN_10" Then
    Msgbox(64, "win10privacyfix", "wrote this tool in a few minutes. If I get some feedback, then I extend this Tool")
@@ -99,6 +133,16 @@ GUICtrlSetState($Bcheck, $GUI_DISABLE)
 
 $OSEdition = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "EditionID")
 GUICtrlSetData($Lversion, $winv & " " & $OSEdition & " - Build " & @OSBuild)
+
+Local $versioncheck = _StringBetween(_INetGetSource($check_1), $check_2, $check_3)
+$versionscheck = StringCompare($versioncheck[0], $version)
+$versioncheck[0] = "0.3"
+If $versionscheck = "1" Then
+   GUICtrlSetData($Lversio, $versioncheck[0] & " is online avalible")
+   GUICtrlSetColor(-1, 0x0000FF)
+
+Endif
+
 
 #Region ### Buttoncheck Registry
 
@@ -292,6 +336,9 @@ Case $Bblog
 
 Case $Breddit
    ShellExecute("https://www.reddit.com/r/conspiracy/comments/3fhy27/how_do_disable_all_privacy_leaks_in_windows_10/ctq3p3m")
+
+Case $Lversio
+   ShellExecute("https://github.com/lordfiSh/win10privacyfix/releases")
 
 
 
